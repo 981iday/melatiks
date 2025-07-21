@@ -1,0 +1,79 @@
+/* Reset sederhana */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f7f9fc;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background: #004466;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main content */
+main {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+/* Heading */
+h1, h2 {
+    margin-bottom: 15px;
+    color: #004466;
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    nav {
+        display: block;
+        margin-top: 5px;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+}

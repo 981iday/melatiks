@@ -1,0 +1,17 @@
+# File konfigurasi rahasia
+.env
+
+# Folder log, vendor, cache
+/storage/logs/
+vendor/
+node_modules/
+
+# File sementara
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
