@@ -1,4 +1,3 @@
-
 melatiks/HTML:5/Adminlte4/bootstrap 4/
 ├── assets/                     
 │   ├── js/
@@ -59,10 +58,10 @@ melatiks/HTML:5/Adminlte4/bootstrap 4/
 │   │       └── mapel/               
 │   ├── home.php/       
 │   │   ├── layout/   
-│   │   │   ├── head.php    -->css   
+│   │   │   ├── head.php      
 │   │   │   ├── navbar.php  
-│   │   │   ├── footer.php  -->j
-│   │   │   ├── template.php    -->template utama 
+│   │   │   ├── footer.php  
+│   │   │   ├── template.php    
 │   │   │   └── index.php             
 │   │   ├── page/   
 │   │   │   ├── halaman_profile/index.php  
@@ -79,22 +78,12 @@ melatiks/HTML:5/Adminlte4/bootstrap 4/
 │   └── logs/                   
 ├── helpers/
 │   ├── autoload.php
-│   ├── access.php                          <= function has_access($allowedRoles)
-│   └── url.php                             <= function base_url($path = '') 
+│   ├── access.php                         
+│   └── url.php                            
 ├── index.php <= routing
 ├── logout.php                   
 ├── .htaccess                   
 └── README.md 
 
-views/home.php/
-├── layout/
-│   ├── head.php        => CSS & meta
-│   ├── navbar.php      => Navigasi atas
-│   ├── footer.php      => Footer & script JS
-│   ├── template.php    => Struktur utama HTML
-│   └── index.php       => Loader utama
-├── page/
-│   ├── halaman profile/    => content
-│   └── halaman berita       => content
+git push -u origin master
 
-semua content menggunakan pagelayer yang memiliki id 
