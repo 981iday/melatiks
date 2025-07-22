@@ -1,3 +1,92 @@
+# Melatiks
+
+Aplikasi web berbasis PHP dengan arsitektur MVC menggunakan AdminLTE4 dan Bootstrap 4,  
+dirancang untuk manajemen sekolah dengan fitur multi-role, berita, pengguna, dan pengaturan sistem.
+
+---
+
+## Daftar Isi
+
+- [Deskripsi](#deskripsi)  
+- [Instalasi](#instalasi)  
+- [Konfigurasi](#konfigurasi)  
+- [Struktur Folder](#struktur-folder)  
+- [Panduan Git](#panduan-git)  
+- [Penggunaan Environment (.env)](#penggunaan-environment-env)  
+- [Kontak](#kontak)
+
+---
+
+## Deskripsi
+
+Melatiks adalah platform manajemen sekolah yang modular dan mudah dikembangkan,  
+menggunakan PHP murni dengan pendekatan MVC serta integrasi AdminLTE dan Bootstrap 4.
+
+---
+
+## Instalasi
+
+1. Clone repository:
+
+    ```bash
+    git clone https://github.com/981iday/melatiks.git
+    cd melatiks
+    ```
+
+2. Install dependencies menggunakan Composer:
+
+    ```bash
+    composer install
+    ```
+
+3. Buat file `.env` di root project dengan isi konfigurasi (contoh di bawah).
+
+4. Sesuaikan konfigurasi database di `.env`.
+
+5. Jalankan server lokal (misal Laragon, XAMPP) dan akses aplikasi via browser.
+
+---
+
+## Konfigurasi
+
+File `.env` minimal berisi:
+
+# 1. Cek status file
+git status
+
+# 2. Tambah semua perubahan ke staging area
+git add .
+
+# 3. Tambah file tertentu ke staging
+git add path/to/file.php
+
+# 4. Commit perubahan dengan pesan singkat tapi jelas
+git commit -m "Pesan singkat perubahan"
+
+# 5. Kirim (push) commit ke remote repository
+git push origin master
+
+# 6. Ambil (pull) update terbaru dari remote
+git pull origin master
+
+# 7. Buat branch baru untuk fitur/percobaan
+git checkout -b nama_branch_baru
+
+# 8. Pindah ke branch lain
+git checkout nama_branch
+
+# 9. Gabungkan branch ke branch utama (master)
+git checkout master
+git merge nama_branch
+
+# 10. Batalkan perubahan di file sebelum di-add
+git checkout -- path/to/file.php
+
+# 11. Lihat log commit singkat
+git log --oneline
+
+
+
 melatiks/HTML:5/Adminlte4/bootstrap 4/
 ├── assets/                     
 │   ├── js/
