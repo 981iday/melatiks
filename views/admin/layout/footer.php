@@ -24,7 +24,7 @@
 <!-- Bootstrap 4 -->
 <script src="<?= base_url('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
-<!-- AdminLTE Core JS -->
+<!-- AdminLTE -->
 <script src="<?= base_url('assets/dist/js/adminlte.js') ?>"></script>
 
 <!-- Plugin Tambahan -->
@@ -50,16 +50,51 @@
 <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.html5.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.print.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
-
-<!-- SweetAlert2 -->
 <script src="<?= base_url('assets/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/flashMessage.js') ?>"></script>
 
-<!-- Optional Nested Sortable (aktifkan jika kamu pakai nested menu) -->
+
+<!-- Nested Sortable (jika digunakan) -->
 <script src="<?= base_url('assets/nestedSortable/jquery.mjs.nestedSortable.js') ?>"></script>
 
-<!-- DataTables Init (hanya jika tabel pengguna digunakan) -->
+<!-- Plugin Table Custom Melatiks -->
+<script src="<?= base_url('assets/js/melatiks.table.js') ?>"></script>
+<script src="<?= base_url('assets/js/kategori.js') ?>"></script>
+
+<!-- Inisialisasi Global -->
 <script>
   $(function () {
+    // Inisialisasi semua fitur ketika DOM siap
+    MelatiksTable.init();
+
+    // Tooltip
+    $('[title]').tooltip();
+
+    // Padding TBody
+    $('table tbody td').each(function () {
+      const fontSize = $(this).css('font-size');
+      if (parseFloat(fontSize) <= 14) {
+        $(this).css({
+          'padding-top': '4px',
+          'padding-bottom': '4px',
+          'line-height': '1.2'
+        });
+      }
+    });
+
+    // Padding THead
+    $('table thead th').each(function () {
+      const fontSize = $(this).css('font-size');
+      if (parseFloat(fontSize) <= 14) {
+        $(this).css({
+          'padding-top': '6px',
+          'padding-bottom': '6px',
+          'line-height': '1.4'
+        });
+      }
+    });
+
+    // DataTable: Pengguna
     if ($("#tabel-users").length) {
       $("#tabel-users").DataTable({
         responsive: true,
@@ -68,10 +103,8 @@
         buttons: ["copy", "csv", "excel", "pdf", "print"]
       }).buttons().container().appendTo('#tabel-users_wrapper .col-md-6:eq(0)');
     }
-  });
-</script>
-<script>
-  $(function () {
+
+    // DataTable: Berita
     if ($("#tabel-berita").length) {
       $("#tabel-berita").DataTable({
         responsive: true,
@@ -80,16 +113,40 @@
         buttons: ["copy", "csv", "excel", "pdf", "print"]
       }).buttons().container().appendTo('#tabel-berita_wrapper .col-md-6:eq(0)');
     }
+
+    // Sortable
+    $("#mini-windows-container").sortable({
+      items: '.draggable-card',
+      placeholder: "ui-state-highlight",
+      update: function () {
+        const order = [];
+        $(".draggable-card").each(function () {
+          order.push($(this).attr('id').replace('page-', ''));
+        });
+        console.log("Urutan baru:", order);
+        // $.post('/save-order', { order: order });
+      }
+    });
+
+    // Event tombol edit halaman (contoh)
+    $('.btn-edit-page').on('click', function () {
+      // aksi
+    });
   });
 </script>
 
-<!-- CSS tambahan untuk sortable -->
+<!-- Tambahan CSS Inline -->
 <style>
   .ui-state-highlight {
     height: 40px;
     background-color: #f4f6f9;
     border: 2px dashed #ccc;
     margin-bottom: 5px;
+  }
+
+  .draggable-card {
+    cursor: move;
+    margin-bottom: 20px;
   }
 </style>
 

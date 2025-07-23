@@ -15,6 +15,16 @@ return [
     '/datasiswa'            => ['controller' => 'DataController', 'method' => 'siswa'],
     '/dataguru'             => ['controller' => 'DataController', 'method' => 'guru'],
 
+
+    '/admin/page_setting'                => ['controller' => 'PagesController', 'method' => 'index'],
+    '/admin/page_setting/ajax'           => ['controller' => 'PagesController', 'method' => 'ajax'],
+    '/admin/pages'           => ['controller' => 'PagesController', 'method' => 'index'],
+    '/admin/pages/stores'    => ['controller' => 'PagesController', 'method' => 'store'],
+    '/admin/pages/ajax' => ['controller' => 'PagesController', 'method' => 'ajax'],
+    '/admin/pages/delete' => ['controller' => 'PagesController', 'method' => 'handleDelete'],
+
+
+
     // ─── Setting Section ───────────────────────────────────
     '/admin/setting'                       => ['controller' => 'SettingController', 'method' => 'index'],
     '/admin/setting/hakakses'              => ['controller' => 'SettingController', 'method' => 'index'],
@@ -51,9 +61,20 @@ return [
     '/admin/berita/edit/{id}'          => ['controller' => 'beritaController', 'method' => 'edit'],
     '/admin/berita/update/{id}'        => ['controller' => 'beritaController', 'method' => 'update'],
     '/admin/berita/hapus/{id}'         => ['controller' => 'beritaController', 'method' => 'hapus'],
-
-    // Tambahan jika kamu pakai kategori dan tag juga
-    '/admin/berita/kategori'           => ['controller' => 'beritaController', 'method' => 'kategori'],
+    '/admin/berita/kategori'           => ['controller' => 'beritaController', 'method' => 'index'],
     '/admin/berita/tag'                => ['controller' => 'beritaController', 'method' => 'tag'],
+
+    // Daftar kategori
+    '/admin/kategori' => ['controller' => 'kategoriController', 'method' => 'index'],
+
+    // Simpan kategori (POST)
+    '/admin/kategori/simpan' => ['controller' => 'kategoriController', 'method' => 'simpanKategori'],
+
+    // Update kategori (POST)
+    '/admin/kategori/update/{id}' => ['controller' => 'kategoriController', 'method' => 'updateKategori'],
+
+    // Hapus kategori (POST/AJAX)
+    '/admin/kategori/delete/{id}' => ['controller' => 'kategoriController', 'method' => 'hapusKategori'],
+
 
 ];

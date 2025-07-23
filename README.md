@@ -85,6 +85,7 @@ git checkout -- path/to/file.php
 # 11. Lihat log commit singkat
 git log --oneline
 
+./git-melatiks.sh
 
 
 melatiks/HTML:5/Adminlte4/bootstrap 4/
@@ -131,14 +132,14 @@ melatiks/HTML:5/Adminlte4/bootstrap 4/
 │   │       │   ├── ajax.php       
 │   │       │   └── index.php 
 │   │       ├── berita/   
-│   │       │   ├── berita.php 
-│   │       │   ├── kategori.php     
-│   │       │   ├── tag_berita.php     
-│   │       │   └── index.php 
-│   │       ├── mapel/   
+│   │       │   ├── modal_tambah_berita.php 
+│   │       │   ├── modal_edit_berita.php     
+│   │       │   ├── modal_hapus_berita.php     
+│   │       │   └── index.php tetapi ajax di sini semua atau external
+│   │       ├── pages/   
 │   │       │   ├── data.php 
 │   │       │   ├── edit.php       
-│   │       │   └── hapus.php  
+│   │       │   └── index.php  
 │   │       ├── setting/   
 │   │       │   ├── set_umum.php 
 │   │       │   ├── hakakses.php  
@@ -166,12 +167,22 @@ melatiks/HTML:5/Adminlte4/bootstrap 4/
 ├── storage/
 │   └── logs/                   
 ├── helpers/
+│   ├── config.php
+│   ├── env.php
+│   ├── setting.php
 │   ├── autoload.php
 │   ├── access.php                         
-│   └── url.php                            
-├── index.php <= routing
-├── logout.php                   
-├── .htaccess                   
+│   └── url.php  
+├── vendor/                          
+├── index.php 
+├── logout.php  
+├── .htaccess
+├── .env
+├── .composer.json
+├── .composer.lock
+├── .htaccess
+├── .gitignore                 
+├── git-melatiks.sh                  
 └── README.md 
 
 git push -u origin master

@@ -18,6 +18,9 @@ if (!function_exists('base_url')) {
   <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.png') ?>" type="image/x-icon">
   <meta name="description" content="Melatiks Dashboard Admin">
 
+  <!-- jQuery (WAJIB PALING AWAL) -->
+  <script src="<?= base_url('assets/plugins/jquery/jquery.min.js') ?>"></script>
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 

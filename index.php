@@ -104,7 +104,7 @@ if (!class_exists($controllerName)) {
     exit;
 }
 
-$controller = new $controllerName();
+$controller = new $controllerName($pdo); // Inject PDO ke constructor
 
 if (!method_exists($controller, $method)) {
     http_response_code(500);
