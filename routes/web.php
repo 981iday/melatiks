@@ -65,16 +65,12 @@ return [
     '/admin/berita/tag'                => ['controller' => 'beritaController', 'method' => 'tag'],
 
     // Daftar kategori
-    '/admin/kategori' => ['controller' => 'kategoriController', 'method' => 'index'],
-
-    // Simpan kategori (POST)
-    '/admin/kategori/simpan' => ['controller' => 'kategoriController', 'method' => 'simpanKategori'],
-
-    // Update kategori (POST)
-    '/admin/kategori/update/{id}' => ['controller' => 'kategoriController', 'method' => 'updateKategori'],
-
-    // Hapus kategori (POST/AJAX)
-    '/admin/kategori/delete/{id}' => ['controller' => 'kategoriController', 'method' => 'hapusKategori'],
+    '/admin/kategori' => ['controller' => 'KategoriController', 'method' => 'index'],
+    '/admin/kategori/tambah' => ['controller' => 'KategoriController', 'method' => 'tambah'],
+    '/admin/kategori/edit/{id}' => ['controller' => 'KategoriController', 'method' => 'edit'],
+    '/admin/kategori/update/{id}' => ['controller' => 'KategoriController', 'method' => 'update'],
+    '/admin/kategori/hapus/{id}' => ['controller' => 'KategoriController', 'method' => 'hapus'],
+    '/admin/kategori/data' => ['controller' => 'KategoriController', 'method' => 'data'],
 
 
 ];

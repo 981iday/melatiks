@@ -89,6 +89,7 @@ git log --oneline
 
 
 melatiks/HTML:5/Adminlte4/bootstrap 4/
+php natif/ajax/composer/
 ├── assets/                     
 │   ├── js/
 │   ├── dist/                   
@@ -135,10 +136,10 @@ melatiks/HTML:5/Adminlte4/bootstrap 4/
 │   │       │   ├── modal_tambah_berita.php 
 │   │       │   ├── modal_edit_berita.php     
 │   │       │   ├── modal_hapus_berita.php     
-│   │       │   └── index.php tetapi ajax di sini semua atau external
-│   │       ├── pages/   
-│   │       │   ├── data.php 
-│   │       │   ├── edit.php       
+│   │       │   └── index.php
+│   │       ├── kategori/        
+│   │       │   └── index.php  
+│   │       ├── pages/        
 │   │       │   └── index.php  
 │   │       ├── setting/   
 │   │       │   ├── set_umum.php 
@@ -185,5 +186,33 @@ melatiks/HTML:5/Adminlte4/bootstrap 4/
 ├── git-melatiks.sh                  
 └── README.md 
 
-git push -u origin master
+git status
+git add .
+git commit -m "Commit semua perubahan"
+git push
 
+
+// Untuk simpan berhasil
+header('Location: ...?success=1');
+
+// Untuk update berhasil
+header('Location: ...?update=1');
+
+// Untuk error umum
+header('Location: ...?error=1');
+
+// Untuk pesan kustom
+$msg = urlencode("Nama pengguna tidak boleh kosong.");
+header("Location: ...?type=error&msg=$msg");
+
+
+
+<!-- Inject base_url sebelum JS kustom -->
+<script>
+  const base_url = "<?= base_url() ?>";
+</script>
+
+<!-- Kemudian include JS -->
+<script src="<?= base_url('assets/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/flashMessage.js') ?>"></script>
+<script src="<?= base_url('assets/js/kategori.js') ?>"></script>

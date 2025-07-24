@@ -59,7 +59,6 @@
 
 <!-- Plugin Table Custom Melatiks -->
 <script src="<?= base_url('assets/js/melatiks.table.js') ?>"></script>
-<script src="<?= base_url('assets/js/kategori.js') ?>"></script>
 
 <!-- Inisialisasi Global -->
 <script>
@@ -149,6 +148,12 @@
     margin-bottom: 20px;
   }
 </style>
+<style>
+.swal2-container {
+  z-index: 1060 !important;
+}
+</style>
+
 
 </body>
 </html>

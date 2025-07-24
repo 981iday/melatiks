@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../models/kategoriModel.php';
+require_once __DIR__ . '/../models/KategoriModel.php';
 
-class kategoriController
+class KategoriController
 {
     protected $db;
     protected $model;
@@ -10,64 +10,155 @@ class kategoriController
     {
         global $db;
         $this->db = $db;
-        $this->model = new kategoriModel($db);
+        $this->model = new KategoriModel($db);
     }
 
     public function index()
     {
         $title = "Manajemen Kategori";
-        $kategori = $this->model->semuaKategori();
-
-
+        $kategori = $this->model->getAll();
         $page = "kategori";
+
         include __DIR__ . '/../views/admin/layout/template.php';
     }
 
-    public function simpan()
+    public function tambah()
     {
-        $nama = $_POST['nama_kategori'] ?? '';
-        $slug = $this->slugify($nama);
+        header('Content-Type: application/json');
 
-        $data = ['nama_kategori' => $nama, 'slug' => $slug];
-
-        if ($this->model->insert($data)) {
-            echo json_encode(['status' => 'success', 'message' => 'Kategori berhasil ditambahkan.']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Gagal menambahkan kategori.']);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'message' => 'Metode tidak diizinkan.']);
+            return;
         }
+
+        $nama = trim($_POST['nama'] ?? '');
+        $slug = $this->generateSlug($nama);
+
+        if (empty($nama)) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Validasi gagal.',
+                'errors' => ['nama' => 'Nama kategori tidak boleh kosong.']
+            ]);
+            return;
+        }
+
+        if ($this->model->existsByNama($nama)) {
+            http_response_code(409);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Kategori sudah ada.',
+                'errors' => ['nama' => 'Kategori dengan nama tersebut sudah ada.']
+            ]);
+            return;
+        }
+
+        $result = $this->model->insert([
+            'nama_kategori' => $nama,
+            'slug' => $slug
+        ]);
+
+        echo json_encode([
+            'success' => $result,
+            'message' => $result ? 'Kategori berhasil ditambahkan.' : 'Gagal menambahkan kategori.'
+        ]);
     }
 
     public function update($id)
     {
-        $nama = $_POST['nama_kategori'] ?? '';
-        $slug = $this->slugify($nama);
+        header('Content-Type: application/json');
 
-        $data = ['nama_kategori' => $nama, 'slug' => $slug];
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !is_numeric($id)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Permintaan tidak valid.']);
+            return;
+        }
 
-        if ($this->model->update($id, $data)) {
-            echo json_encode(['status' => 'success', 'message' => 'Kategori berhasil diperbarui.']);
+        $nama = trim($_POST['nama'] ?? '');
+        $slug = $this->generateSlug($nama);
+
+        if (empty($nama)) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Validasi gagal.',
+                'errors' => ['nama' => 'Nama kategori tidak boleh kosong.']
+            ]);
+            return;
+        }
+
+        $existing = $this->model->getByNama($nama);
+        if ($existing && $existing['id_kategori'] != $id) {
+            http_response_code(409);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Nama kategori sudah digunakan.',
+                'errors' => ['nama' => 'Kategori dengan nama tersebut sudah digunakan.']
+            ]);
+            return;
+        }
+
+        $result = $this->model->update($id, [
+            'nama_kategori' => $nama,
+            'slug' => $slug
+        ]);
+
+        echo json_encode([
+            'success' => $result,
+            'message' => $result ? 'Kategori berhasil diperbarui.' : 'Gagal memperbarui kategori.'
+        ]);
+    }
+
+    public function hapus($id)
+    {
+        header('Content-Type: application/json');
+
+        if (!is_numeric($id)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'ID tidak valid.']);
+            return;
+        }
+
+        $result = $this->model->delete($id);
+
+        echo json_encode([
+            'success' => $result,
+            'message' => $result ? 'Kategori berhasil dihapus.' : 'Gagal menghapus kategori.'
+        ]);
+    }
+
+    public function edit($id)
+    {
+        header('Content-Type: application/json');
+
+        if (!is_numeric($id)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'ID tidak valid.']);
+            return;
+        }
+
+        $data = $this->model->getById($id);
+        if ($data) {
+            echo json_encode($data);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui kategori.']);
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Kategori tidak ditemukan.']);
         }
     }
 
-    public function delete($id)
+    private function generateSlug($string)
     {
-        if ($this->model->delete($id)) {
-            echo json_encode(['status' => 'success', 'message' => 'Kategori berhasil dihapus.']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Gagal menghapus kategori.']);
-        }
+        $slug = preg_replace('/[^a-z0-9\s-]/i', '', $string);    // Hapus karakter aneh
+        $slug = preg_replace('/[\s-]+/', '-', $slug);            // Ganti spasi jadi -
+        return strtolower(trim($slug, '-'));
     }
 
-    private function slugify($text)
-    {
-        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-        $text = preg_replace('~[^-\w]+~', '', $text);
-        $text = trim($text, '-');
-        $text = preg_replace('~-+~', '-', $text);
-        $text = strtolower($text);
-        return !empty($text) ? $text : 'n-a';
-    }
+    public function data()
+{
+    header('Content-Type: application/json');
+    echo json_encode($this->model->getAll());
+}
+
 }

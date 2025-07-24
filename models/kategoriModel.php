@@ -1,6 +1,6 @@
 <?php
 
-class kategoriModel
+class KategoriModel
 {
     protected $db;
 
@@ -9,44 +9,65 @@ class kategoriModel
         $this->db = $db;
     }
 
-    public function semuakategori()
+    public function getAll(): array
     {
-
-        $stmt = $this->db->query("SELECT * FROM kategori ORDER BY id_kategori ASC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        $stmt = $this->db->query("SELECT * FROM kategori ORDER BY id_kategori DESC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insert($data)
+    public function getById(int $id): ?array
     {
-        $sql = "INSERT INTO kategori_berita (nama_kategori, slug) VALUES (:nama_kategori, :slug)";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute($data);
+        $stmt = $this->db->prepare("SELECT * FROM kategori WHERE id_kategori = ?");
+        $stmt->execute([$id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data ?: null;
     }
 
-    public function update($id, $data)
+    public function getByNama($nama)
     {
-        $sql = "UPDATE kategori_berita SET nama_kategori = :nama_kategori, slug = :slug WHERE id_kategori = :id";
-        $stmt = $this->db->prepare($sql);
-        $data['id'] = $id;
-        return $stmt->execute($data);
+        $query = $this->db->prepare("SELECT * FROM kategori WHERE nama_kategori = ?");
+        $query->execute([$nama]);
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function delete($id)
+
+    public function existsByNama($nama)
     {
-        $sql = "DELETE FROM kategori_berita WHERE id_kategori = :id";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute(['id' => $id]);
+        $query = $this->db->prepare("SELECT COUNT(*) FROM kategori WHERE nama_kategori = ?");
+        $query->execute([$nama]);
+        return $query->fetchColumn() > 0;
     }
 
-    public function getAll()
+
+    public function insert(array $data): bool
     {
-        return $this->db->query("SELECT * FROM kategori_berita ORDER BY id_kategori DESC")->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->db->prepare("
+            INSERT INTO kategori (nama_kategori, slug)
+            VALUES (:nama_kategori, :slug)
+        ");
+        return $stmt->execute([
+            ':nama_kategori' => $data['nama_kategori'],
+            ':slug' => $data['slug']
+        ]);
     }
 
-    public function getById($id)
+    public function update(int $id, array $data): bool
     {
-        $stmt = $this->db->prepare("SELECT * FROM kategori_berita WHERE id_kategori = :id LIMIT 1");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $this->db->prepare("
+            UPDATE kategori
+            SET nama_kategori = :nama_kategori, slug = :slug
+            WHERE id_kategori = :id
+        ");
+        return $stmt->execute([
+            ':nama_kategori' => $data['nama_kategori'],
+            ':slug' => $data['slug'],
+            ':id' => $id
+        ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db->prepare("DELETE FROM kategori WHERE id_kategori = ?");
+        return $stmt->execute([$id]);
     }
 }
